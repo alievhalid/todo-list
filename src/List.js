@@ -6,15 +6,18 @@ function List() {
         [
             {
                 text: 'Купить ноутбук',
-                favorite: false
+                favorite: false,
+                paid: false
             },
             {
                 text: 'Доделать верстку',
-                favorite: false
+                favorite: false,
+                paid: false
             },
             {
                 text: 'Покормить кота',
-                favorite: false
+                favorite: false,
+                paid: false
             }
         ]
     )
@@ -34,12 +37,14 @@ const deleteTodo = (indexof) => {
     })
     setTodos(filt)
 }
+
 const makeFavorite = ((ind) => {
     const newTodos = todos.map((item,index) => {
         if(ind === index) {
             return {
                 ...item,
-                favorite: !item.favorite
+                favorite: !item.favorite,
+                paid: !item.paid
             };
         } 
         return item;
@@ -55,6 +60,9 @@ const makeFavorite = ((ind) => {
             <div className="todo-text">
                 {todo.text}
             </div>
+            <div className="paid">
+            {todo.paid ? "сделано" : "не сделано"}
+            </div>
             <div className="actions">
                 <button onClick={() => deleteTodo(indexof)}>
                     x
@@ -67,12 +75,23 @@ const makeFavorite = ((ind) => {
         setTodos([
         {
             text: text,
-            favorite: false
+            favorite: false,
+            paid: check
         },...todos
    
     ]);
     setText("")
     }
+
+
+
+    const [check,setCheck] = useState(false);
+    const handlechange = () => {
+        setCheck(!check)
+    }
+
+
+
     console.log(text);
     return (
         <div className="app">
@@ -87,6 +106,11 @@ const makeFavorite = ((ind) => {
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 />
+                <input 
+                type="checkbox"
+                checked={check}
+                onChange={handlechange}
+                 />
                 
                 <button onClick={plus}>
                     добавить
